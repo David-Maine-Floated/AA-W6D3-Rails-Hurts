@@ -140,3 +140,251 @@ Processing by UsersController#show as */*
 Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 118)
 
 
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7690644669839324760)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ChangeUsers (20231122211551)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "users" RENAME COLUMN "username" TO "name"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (2.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231122211551"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(7690644669839324760)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (1.5ms)[0m  [1m[32mINSERT INTO "users" ("name", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "david"], ["email", "david@butthead.gov"], ["created_at", "2023-11-22 21:20:06.617149"], ["updated_at", "2023-11-22 21:20:06.617149"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("name", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "jake"], ["email", "jake@butthead.gov"], ["created_at", "2023-11-22 21:20:52.917049"], ["updated_at", "2023-11-22 21:20:52.917049"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/users" for ::1 at 2023-11-22 16:22:02 -0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#index as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/controllers/users_controller.rb:4:in `index'
+Completed 200 OK in 8ms (Views: 4.0ms | ActiveRecord: 3.4ms | Allocations: 6545)
+
+
+Started POST "/users?users[user]={name:%20%22Kin%22,%20email:%20%22kin@cookies.gov%22}" for ::1 at 2023-11-22 16:26:17 -0500
+Processing by UsersController#create as */*
+  Parameters: {"users"=>{"user"=>"{name: \"Kin\", email: \"kin@cookies.gov\"}"}}
+Completed 400 Bad Request in 1ms (ActiveRecord: 0.0ms | Allocations: 1164)
+
+
+
+ActionController::ParameterMissing - param is missing or the value is empty: user
+Did you mean?  users:
+  app/controllers/users_controller.rb:12:in `create'
+
+Started POST "/users?users={name:%20%22Kin%22,%20email:%20%22kin@cookies.gov%22}" for ::1 at 2023-11-22 16:28:59 -0500
+Processing by UsersController#create as */*
+  Parameters: {"users"=>"{name: \"Kin\", email: \"kin@cookies.gov\"}"}
+Completed 400 Bad Request in 1ms (ActiveRecord: 0.0ms | Allocations: 606)
+
+
+
+ActionController::ParameterMissing - param is missing or the value is empty: user
+Did you mean?  users:
+  app/controllers/users_controller.rb:12:in `create'
+
+Started POST "/users?users:={name:%20%22Kin%22,%20email:%20%22kin@cookies.gov%22}" for ::1 at 2023-11-22 16:29:14 -0500
+Processing by UsersController#create as */*
+  Parameters: {"users:"=>"{name: \"Kin\", email: \"kin@cookies.gov\"}"}
+Completed 400 Bad Request in 1ms (ActiveRecord: 0.0ms | Allocations: 618)
+
+
+
+ActionController::ParameterMissing - param is missing or the value is empty: user
+Did you mean?  users::
+  app/controllers/users_controller.rb:12:in `create'
+
+Started POST "/users?name%20=%27daviud%27" for ::1 at 2023-11-22 16:30:48 -0500
+Processing by UsersController#create as */*
+  Parameters: {"name "=>"'daviud'"}
+Completed 400 Bad Request in 1ms (ActiveRecord: 0.0ms | Allocations: 592)
+
+
+
+ActionController::ParameterMissing - param is missing or the value is empty: user:
+  app/controllers/users_controller.rb:12:in `create'
+
+Started POST "/users?user[name]=Spencer&user[email]=Spencer@buffKings.gov" for ::1 at 2023-11-22 16:32:42 -0500
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"name"=>"Spencer", "email"=>"Spencer@buffKings.gov"}}
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/users_controller.rb:14:in `create'
+  [1m[36mUser Create (1.0ms)[0m  [1m[32mINSERT INTO "users" ("name", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Spencer"], ["email", "Spencer@buffKings.gov"], ["created_at", "2023-11-22 21:32:42.950818"], ["updated_at", "2023-11-22 21:32:42.950818"]]
+  ↳ app/controllers/users_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/users_controller.rb:14:in `create'
+Completed 200 OK in 36ms (Views: 0.2ms | ActiveRecord: 17.0ms | Allocations: 8364)
+
+
+Started GET "/users" for ::1 at 2023-11-22 16:33:39 -0500
+Processing by UsersController#index as */*
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/controllers/users_controller.rb:4:in `index'
+Completed 200 OK in 4ms (Views: 3.3ms | ActiveRecord: 0.6ms | Allocations: 1144)
+
+
+Started GET "/users/2" for ::1 at 2023-11-22 16:35:03 -0500
+Processing by UsersController#show as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:8:in `show'
+Completed 200 OK in 38ms (Views: 0.2ms | ActiveRecord: 6.8ms | Allocations: 5888)
+
+
+Started GET "/users/3" for ::1 at 2023-11-22 16:35:06 -0500
+Processing by UsersController#show as */*
+  Parameters: {"id"=>"3"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:8:in `show'
+Completed 200 OK in 3ms (Views: 0.4ms | ActiveRecord: 0.4ms | Allocations: 643)
+
+
+Started GET "/users/1" for ::1 at 2023-11-22 16:35:09 -0500
+Processing by UsersController#show as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:8:in `show'
+Completed 200 OK in 3ms (Views: 0.9ms | ActiveRecord: 0.3ms | Allocations: 653)
+
+
+Started GET "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:36:25 -0500
+Processing by UsersController#show as */*
+  Parameters: {"users"=>{"name"=>"'hell'"}, "id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:8:in `show'
+Completed 200 OK in 3ms (Views: 0.6ms | ActiveRecord: 0.3ms | Allocations: 651)
+
+
+Started POST "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:36:31 -0500
+  
+ActionController::RoutingError (No route matches [POST] "/users/1"):
+  
+Started POST "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:39:16 -0500
+  
+ActionController::RoutingError (No route matches [POST] "/users/1"):
+  
+Started POST "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:39:25 -0500
+  
+ActionController::RoutingError (No route matches [POST] "/users/1"):
+  
+Started POST "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:39:26 -0500
+  
+ActionController::RoutingError (No route matches [POST] "/users/1"):
+  
+Started POST "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:40:07 -0500
+  
+ActionController::RoutingError (No route matches [POST] "/users/1"):
+  
+Started POST "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:40:24 -0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [POST] "/users/1"):
+  
+Started POST "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:40:37 -0500
+  
+ActionController::RoutingError (No route matches [POST] "/users/1"):
+  
+Started POST "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:42:14 -0500
+  
+ActionController::RoutingError (No route matches [POST] "/users/1"):
+  
+Started POST "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:43:54 -0500
+  
+ActionController::RoutingError (No route matches [POST] "/users/1"):
+  
+Started POST "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:44:25 -0500
+  
+ActionController::RoutingError (No route matches [POST] "/users/1"):
+  
+Started PUT "/users/1?users[name]=%27hell%27" for ::1 at 2023-11-22 16:44:37 -0500
+
+AbstractController::ActionNotFound - The action 'update' could not be found for UsersController:
+
+Started POST "/users/1" for ::1 at 2023-11-22 16:44:51 -0500
+  
+ActionController::RoutingError (No route matches [POST] "/users/1"):
+  
+Started POST "/users" for ::1 at 2023-11-22 16:46:43 -0500
+Processing by UsersController#create as */*
+  Parameters: {"users"=>{"name"=>"'hihi'"}}
+Completed 400 Bad Request in 2ms (ActiveRecord: 0.0ms | Allocations: 1234)
+
+
+
+ActionController::ParameterMissing - param is missing or the value is empty: user
+Did you mean?  users:
+  app/controllers/users_controller.rb:12:in `create'
+
+Started POST "/users" for ::1 at 2023-11-22 16:46:56 -0500
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"name"=>"'hihi'"}}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/users_controller.rb:16:in `create'
+  [1m[36mUser Create (2.6ms)[0m  [1m[32mINSERT INTO "users" ("name", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "'hihi'"], ["email", nil], ["created_at", "2023-11-22 21:46:56.021313"], ["updated_at", "2023-11-22 21:46:56.021313"]]
+  ↳ app/controllers/users_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/users_controller.rb:16:in `create'
+Completed 500 Internal Server Error in 23ms (ActiveRecord: 7.0ms | Allocations: 10189)
+
+
+
+ActiveRecord::NotNullViolation - PG::NotNullViolation: ERROR:  null value in column "email" of relation "users" violates not-null constraint
+DETAIL:  Failing row contains (4, 'hihi', null, 2023-11-22 21:46:56.021313, 2023-11-22 21:46:56.021313).:
+  app/controllers/users_controller.rb:16:in `create'
+
+Started POST "/users" for ::1 at 2023-11-22 16:47:46 -0500
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"name"=>"'hihi'"}}
+Completed 500 Internal Server Error in 0ms (ActiveRecord: 0.0ms | Allocations: 573)
+
+
+
+SyntaxError - syntax error, unexpected symbol literal, expecting `do' or '{' or '('
+...idate :name, :email, presence :true 
+...                              ^:
+  app/models/user.rb:2:in `'
+  app/controllers/users_controller.rb:12:in `create'
+
+Started POST "/users" for ::1 at 2023-11-22 16:48:05 -0500
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"name"=>"'hihi'"}}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 1070)
+
+
+
+ArgumentError - Unknown key: :presence. Valid keys are: :on, :if, :unless, :prepend. Perhaps you meant to call `validates` instead of `validate`?:
+  app/models/user.rb:2:in `<class:User>'
+  app/models/user.rb:1:in `<top (required)>'
+  app/controllers/users_controller.rb:12:in `create'
+
+Started POST "/users" for ::1 at 2023-11-22 16:48:24 -0500
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"name"=>"'hihi'"}}
+Completed 422 Unprocessable Entity in 6ms (Views: 0.2ms | ActiveRecord: 2.9ms | Allocations: 3971)
+
+
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Create (2.2ms)[0m  [1m[32mINSERT INTO "users" ("name", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "hello"], ["email", nil], ["created_at", "2023-11-22 21:52:31.569022"], ["updated_at", "2023-11-22 21:52:31.569022"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+Started POST "/users?user=%27hello%27" for ::1 at 2023-11-22 16:53:50 -0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#create as */*
+  Parameters: {"user"=>"'hello'"}
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms | Allocations: 2683)
+
+
+
+NoMethodError - undefined method `permit' for "'hello'":String
+        user = User.new(params.require(:user).permit(:name, :email))
+                                             ^^^^^^^:
+  app/controllers/users_controller.rb:12:in `create'
+
+Started POST "/users?user[name]=%27hello%27" for ::1 at 2023-11-22 16:55:59 -0500
+Processing by UsersController#create as */*
+  Parameters: {"user"=>{"name"=>"'hello'"}}
+Completed 422 Unprocessable Entity in 26ms (Views: 0.4ms | ActiveRecord: 5.6ms | Allocations: 8138)
+
+
